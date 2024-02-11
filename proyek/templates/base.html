@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <link
+      rel="stylesheet"
+      href=" 	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <nav class="navbar fixed-top bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Manajemen Proyek</a>
+      </div>
+    </nav>
+    <div class="container mt-5 pt-4">
+      <div class="row align-items-end mb-4 pb-2">
+        <div class="col-md-8">
+          <div class="section-title text-center text-md-start">
+            {% if messages %} {% for message in messages %}
+            <div
+              class="alert {% if 'success' in message.tags %}alert-success{% endif %} {% if 'error' in message.tags %}alert-danger{% endif %}"
+              role="alert"
+            >
+              {{ message }}
+            </div>
+            {% endfor %} {% endif %}
+            <h4 class="title mb-4">List Beberapa Proyek</h4>
+            <p class="text-muted mb-0 para-desc">
+              Berikut Daftar Proyek yang sedang dan selesai dikerjakan selama
+              karir berlangsung.
+            </p>
+          </div>
+        </div>
+        <!--end col-->
+
+        <div class="col-md-4 mt-2 mt-sm-0 d-none d-md-block">
+          <div class="text-center text-md-end">
+            <a href="{% url 'tambah_proyek' %}" class="btn btn-primary">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 4.5v15m7.5-7.5h-15"
+                />
+              </svg>
+              Tambah Proyek
+            </a>
+          </div>
+        </div>
+        <!--end col-->
+      </div>
+
+      <div class="row">
+        {% for item in proyek_arr %}
+        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+          <div class="card border-0 bg-light rounded shadow">
+            <div class="card-body p-4">
+              <span
+                class="badge rounded-pill {{ item.status_color }} float-md-end mb-3 mb-sm-0"
+              >
+                {{ item.status }}
+              </span>
+              <h6>{{ item.nama_proyek}}</h6>
+              <div class="mt-3">
+                <span class="text-muted d-block fs-6"
+                  >{{item.deskripsi_proyek}}
+                </span>
+              </div>
+              <div class="">
+                <span class="text-muted d-block fs-6"
+                  >ETA : {{item.tanggal_mulai}} - {{item.tanggal_selesai}}
+                </span>
+              </div>
+
+              <div class="mt-3">
+                <a
+                  href="{% url 'view_tugas' proyek_id=item.id %}"
+                  class="btn btn-primary"
+                  >View Details</a
+                >
+                <a
+                  href="{% url 'edit_proyek' proyek_id=item.id %}"
+                  class="btn btn-success"
+                  >Edit</a
+                >
+                <a
+                  href="{% url 'delete_proyek' id=item.id %}"
+                  class="btn btn-danger"
+                  >Delete</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <!--end row-->
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src=" 	https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
